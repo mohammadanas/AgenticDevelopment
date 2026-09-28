@@ -2,7 +2,7 @@
 
 AgentClinic will be delivered in small, independently reviewable phases. Each phase should leave the application in a working state and introduce only the foundation needed by later phases.
 
-## Phase 1 — Hono Foundation
+## Phase 1 — Hono Foundation ✅
 
 - Install and configure Hono and the `tsx` development server.
 - Add a basic home route confirming that AgentClinic is open.
