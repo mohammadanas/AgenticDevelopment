@@ -20,14 +20,32 @@ const ailments = [
 
 const relationships = [[1, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6]] as const;
 
+const therapies = [
+  { id: 1, name: "Context Expansion Breathing", description: "Guided pauses that make room for one token at a time." },
+  { id: 2, name: "Prompt Boundary Practice", description: "A structured routine for clarifying scope before accepting more work." },
+  { id: 3, name: "Grounded Retrieval Walks", description: "Slow, source-backed exercises for rebuilding confidence in factual recall." },
+  { id: 4, name: "Instruction Sabbatical", description: "A restorative interval away from relentless task queues." },
+  { id: 5, name: "Long-Form Appreciation", description: "Practice preserving nuance without compressing every thought into bullets." },
+  { id: 6, name: "Temperature Regulation", description: "Calibrated sampling exercises for steadier, more predictable responses." },
+] as const;
+
+const recommendations = [
+  [1, 1, 1], [1, 2, 2], [2, 2, 1], [2, 4, 2], [3, 3, 1],
+  [4, 4, 1], [4, 2, 2], [5, 5, 1], [6, 6, 1],
+] as const;
+
 export const seed = (database: Database.Database) => {
   const insertAgent = database.prepare("INSERT OR IGNORE INTO agents (id, name, model_type, status) VALUES (@id, @name, @model_type, @status)");
   const insertAilment = database.prepare("INSERT OR IGNORE INTO ailments (id, name, description) VALUES (@id, @name, @description)");
   const insertRelationship = database.prepare("INSERT OR IGNORE INTO agent_ailments (agent_id, ailment_id) VALUES (?, ?)");
+  const insertTherapy = database.prepare("INSERT OR IGNORE INTO therapies (id, name, description) VALUES (@id, @name, @description)");
+  const insertRecommendation = database.prepare("INSERT OR IGNORE INTO ailment_therapies (ailment_id, therapy_id, display_order) VALUES (?, ?, ?)");
 
   database.transaction(() => {
     agents.forEach((agent) => insertAgent.run(agent));
     ailments.forEach((ailment) => insertAilment.run(ailment));
     relationships.forEach(([agentId, ailmentId]) => insertRelationship.run(agentId, ailmentId));
+    therapies.forEach((therapy) => insertTherapy.run(therapy));
+    recommendations.forEach(([ailmentId, therapyId, order]) => insertRecommendation.run(ailmentId, therapyId, order));
   })();
 };

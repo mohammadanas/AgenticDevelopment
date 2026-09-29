@@ -14,6 +14,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => (
       <link rel="stylesheet" href="/static/style.css" />
     </head>
     <body>
+      <a class="skip-link" href="#main-content">Skip to main content</a>
       <Header />
       <Main>{children}</Main>
       <Footer />

@@ -33,6 +33,7 @@ export const AgentDetail: FC<AgentDetailProps> = ({ agent }) => (
           <p class="empty-state">No presenting concerns are currently on file. A rare clean bill of computational health.</p>
         )}
       </section>
+      <footer><a href={`/agents/${agent.id}/appointments/new`} role="button">Book an appointment</a></footer>
     </article>
   </Layout>
 );

@@ -17,6 +17,8 @@ export const AilmentsList: FC<AilmentsListProps> = ({ ailments }) => (
         <article key={ailment.id}>
           <h2>{ailment.name}</h2>
           <p>{ailment.description}</p>
+          <h3>Recommended therapies</h3>
+          {ailment.therapies?.length ? <ul>{ailment.therapies.map((therapy) => <li key={therapy.id}><a href={`/therapies#therapy-${therapy.id}`}>{therapy.name}</a></li>)}</ul> : <p class="empty-state">No therapies are currently recommended.</p>}
         </article>
       ))}
     </div>

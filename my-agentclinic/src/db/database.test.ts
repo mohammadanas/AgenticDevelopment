@@ -26,8 +26,8 @@ describe("migrations", () => {
     const database = freshDatabase();
     expect(() => migrate(database)).not.toThrow();
     const tables = database.prepare("SELECT name FROM sqlite_master WHERE type = 'table'").all() as Array<{ name: string }>;
-    expect(tables.map(({ name }) => name)).toEqual(expect.arrayContaining(["migrations", "agents", "ailments", "agent_ailments"]));
-    expect((database.prepare("SELECT COUNT(*) AS count FROM migrations").get() as { count: number }).count).toBe(3);
+    expect(tables.map(({ name }) => name)).toEqual(expect.arrayContaining(["migrations", "agents", "ailments", "agent_ailments", "therapies", "ailment_therapies", "appointments"]));
+    expect((database.prepare("SELECT COUNT(*) AS count FROM migrations").get() as { count: number }).count).toBe(5);
   });
 
   it("enforces foreign keys and unique relationships", () => {
@@ -36,6 +36,8 @@ describe("migrations", () => {
     expect(database.pragma("foreign_keys", { simple: true })).toBe(1);
     expect(() => database.prepare("INSERT INTO agent_ailments VALUES (?, ?)").run(999, 1)).toThrow();
     expect(() => database.prepare("INSERT INTO agent_ailments VALUES (?, ?)").run(1, 1)).toThrow();
+    expect(() => database.prepare("INSERT INTO ailment_therapies VALUES (?, ?, ?)").run(999, 1, 1)).toThrow();
+    expect(() => database.prepare("INSERT INTO appointments (agent_id, scheduled_at, status) VALUES (?, ?, ?)").run(1, "2030-01-01T10:00:00+00:00", "unknown")).toThrow();
   });
 
   it("rolls back a failed migration without recording it", () => {
@@ -57,6 +59,8 @@ describe("seed and repository", () => {
     expect((database.prepare("SELECT COUNT(*) AS count FROM agents").get() as { count: number }).count).toBe(6);
     expect((database.prepare("SELECT COUNT(*) AS count FROM ailments").get() as { count: number }).count).toBe(6);
     expect((database.prepare("SELECT COUNT(*) AS count FROM agent_ailments").get() as { count: number }).count).toBe(6);
+    expect((database.prepare("SELECT COUNT(*) AS count FROM therapies").get() as { count: number }).count).toBe(6);
+    expect((database.prepare("SELECT COUNT(*) AS count FROM ailment_therapies").get() as { count: number }).count).toBe(9);
   });
 
   it("returns ordered lists, joined details, empty relationships, and missing records", () => {
@@ -68,5 +72,22 @@ describe("seed and repository", () => {
     expect(repository.findAgent(1)?.ailments).toHaveLength(2);
     expect(repository.findAgent(6)?.ailments).toEqual([]);
     expect(repository.findAgent(999999)).toBeUndefined();
+    expect(repository.listTherapies()).toHaveLength(6);
+    expect(repository.listAilments()[0].therapies?.map(({ id }) => id)).toEqual([1, 2]);
+  });
+
+  it("creates appointments, calculates dashboard data, and protects terminal states", () => {
+    const database = freshDatabase();
+    seed(database);
+    const repository = createRepository(database);
+    const id = repository.createAppointment(1, "2030-01-01T10:00:00+00:00");
+    expect(repository.findAppointment(id)?.agent_name).toBe("Bartholomew-47B");
+    const dashboard = repository.getDashboard("2029-01-01T00:00:00.000Z");
+    expect(dashboard.agentCount).toBe(6);
+    expect(dashboard.activeAilmentCount).toBe(4);
+    expect(dashboard.upcomingCount).toBe(1);
+    expect(repository.transitionAppointment(id, "completed")).toBe("updated");
+    expect(repository.transitionAppointment(id, "cancelled")).toBe("terminal");
+    expect(repository.transitionAppointment(999999, "completed")).toBe("missing");
   });
 });

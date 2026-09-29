@@ -1,5 +1,5 @@
 import type { FC, PropsWithChildren } from "hono/jsx";
 
 export const Main: FC<PropsWithChildren> = ({ children }) => (
-  <main>{children}</main>
+  <main id="main-content" tabindex={-1}>{children}</main>
 );
