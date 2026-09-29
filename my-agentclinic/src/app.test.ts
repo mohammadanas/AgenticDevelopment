@@ -51,6 +51,31 @@ describe("shared application routes", () => {
   });
 });
 
+describe("feedback route", () => {
+  it("renders the accessible presentation-only feedback form", async () => {
+    const response = await app.request("/feedback");
+    const body = await response.text();
+
+    expect(response.status).toBe(200);
+    expect(body).toMatch(/^<!doctype html>/i);
+    expect(body).toContain("Share feedback");
+    expect(body).toContain('href="/feedback">Feedback</a>');
+    expect(body).toContain('<label for="feedback-category">Feedback category</label>');
+    expect(body).toContain('id="feedback-category" name="category" required');
+    expect(body).toContain('<label for="feedback-message">Your feedback</label>');
+    expect(body).toContain('id="feedback-message" name="message"');
+    expect(body).toContain('id="feedback-contact" name="contact"');
+    expect(body).toContain("Feedback delivery is coming soon");
+    expect(body).toContain("this preview does not send or save it yet");
+    expect(body).toContain('type="submit" disabled');
+  });
+
+  it("does not expose feedback submission handling", async () => {
+    const response = await app.request("/feedback", { method: "POST" });
+    expect(response.status).toBe(404);
+  });
+});
+
 describe("agent routes", () => {
   it("lists seeded agents with readable statuses and detail links", async () => {
     const response = await app.request("/agents");

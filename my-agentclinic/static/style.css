@@ -82,6 +82,11 @@ nav .brand { color: var(--clinic-ink); font-weight: 800; letter-spacing: -0.025e
 .form-card { max-width: 42rem; margin-inline: auto; border: 1px solid var(--clinic-border); }
 .form-card form { display: grid; gap: 0.75rem; }
 .form-card button { margin-top: 0.75rem; }
+.feedback-form-card { margin-inline: 0; }
+.form-help { margin-bottom: 0.5rem; color: var(--clinic-muted); }
+.optional-label { color: var(--clinic-muted); font-weight: 400; }
+.feedback-availability { margin-block: 0.75rem 0; background: var(--clinic-surface); }
+.feedback-availability p { margin: 0.25rem 0 0; }
 .notice { padding: 1rem; border: 1px solid var(--clinic-border); border-left-width: 0.3rem; border-radius: var(--pico-border-radius); }
 .notice-success { border-left-color: var(--clinic-success); background: color-mix(in srgb, var(--clinic-success) 8%, var(--pico-background-color)); }
 .notice-error, [aria-invalid="true"] { border-color: var(--clinic-danger); }

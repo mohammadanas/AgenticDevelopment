@@ -15,6 +15,7 @@ describe("layout components", () => {
     expect(output).toContain('href="/ailments">Ailments</a>');
     expect(output).toContain('href="/therapies">Therapies</a>');
     expect(output).toContain('href="/dashboard">Dashboard</a>');
+    expect(output).toContain('href="/feedback">Feedback</a>');
   });
 
   it("renders page content inside the main landmark", () => {

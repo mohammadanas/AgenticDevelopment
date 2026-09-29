@@ -6,6 +6,7 @@ import { html } from "hono/html";
 import { ErrorPage } from "./components/ErrorPage";
 import type { Logger } from "./logger";
 import { silentLogger } from "./logger";
+import { Feedback } from "./pages/Feedback";
 import { Home } from "./pages/Home";
 import { agentsRouter } from "./routes/agents";
 import { ailmentsRouter } from "./routes/ailments";
@@ -35,6 +36,7 @@ export const createApp = (database: Database.Database, options: AppOptions = {})
   app.use("/static/*", serveStatic({ root: "./" }));
 
   app.get("/", (context) => context.html(html`<!doctype html>${<Home />}`));
+  app.get("/feedback", (context) => context.html(html`<!doctype html>${<Feedback />}`));
   app.get("/health", (context) => context.json({ status: "ok" }));
   app.route("/agents", agentsRouter(database, timeZone, now));
   app.route("/ailments", ailmentsRouter(database));
