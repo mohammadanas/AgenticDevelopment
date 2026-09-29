@@ -1,73 +1,75 @@
 # Roadmap
 
-AgentClinic will be delivered in small, independently reviewable phases. Each phase should leave the application working and introduce only the foundation required by later phases. Every phase that adds or changes web UI must preserve mobile-first responsive behavior.
+Work is divided into very small phases. Each phase should be independently reviewable, testable, and leave the application in a usable state.
 
-## Phase 1 — Hono Foundation ✅
+## Delivered Baseline
 
-- [x] Install and configure Hono and the `tsx` development server.
-- [x] Add a home route confirming that AgentClinic is open.
-- [x] Add a lightweight health route for a reliable server check.
-- [x] Confirm TypeScript builds successfully.
-- [x] Add Vitest coverage for the home page, stylesheet, and health contracts.
-- [x] Establish a responsive viewport and mobile-first, fluid foundational styles.
+The application already includes agents, ailments, therapies, appointment booking, a staff dashboard, responsive styling, logging, and user-facing error handling. The phases below begin with the outstanding work in `TODO.md` and preserve its priority: feedback form first, customer reviews second, and the about page with its address and map third.
 
-## Phase 2 — Agents and Ailments ✅
+## Phase 1 — Feedback Form Presentation
 
-- [x] Add server-rendered JSX support.
-- [x] Create shared header, navigation, main-content, and footer components.
-- [x] Add foundational typography, color, spacing, and layout styles.
-- [x] Render every page through the shared layout.
-- [x] Add SQLite, a migration runner, and the initial agents table.
-- [x] Seed a small set of fictional agents.
-- [x] Add an agent list page with links to individual records.
-- [x] Test the migration, data access, and list route.
-- [x] Add an agent detail page with identity, model type, status, and presenting concerns.
-- [x] Handle missing agent records with an appropriate not-found response.
-- [x] Test successful and missing detail views.
-- [x] Add the ailments schema and seed data.
-- [x] Associate agents with one or more ailments.
-- [x] Add an ailments catalog and show ailments on agent records.
-- [x] Test ailment listings and agent relationships.
+- Add a clearly labeled feedback form in the existing site layout.
+- Include only the fields needed to provide useful feedback.
+- Ensure labels, instructions, and keyboard navigation are clear.
 
-## Phase 3 — Therapies ✅
+**Outcome:** An agent can find and complete the form in a modern browser.
 
-- [x] Add the therapies schema and seed data.
-- [x] Associate ailments with recommended therapies.
-- [x] Add a therapies catalog and display recommendations alongside ailments.
-- [x] Test therapy listings and recommendations.
+## Phase 2 — Feedback Submission
 
-## Phase 4 — Appointment Booking ✅
+- Add server-side submission handling.
+- Validate required input and return specific, accessible validation messages.
+- Preserve safe form values when validation fails.
 
-- [x] Add the appointments schema with agent, date and time, and status.
-- [x] Add a booking form reachable from an agent record.
-- [x] Validate submitted values on the server.
-- [x] Show a clear confirmation after successful booking.
-- [x] Test valid submissions, invalid submissions, and persistence.
+**Outcome:** Valid feedback is accepted and invalid feedback can be corrected without guesswork.
 
-## Phase 5 — Staff Dashboard ✅
+## Phase 3 — Feedback Completion and Tests
 
-- [x] Add a dashboard summarizing agents, active ailments, and upcoming appointments.
-- [x] Add simple tables or lists for recent clinic activity.
-- [x] Link dashboard summaries to the relevant detail views.
-- [x] Test summary calculations and empty states.
+- Show an unambiguous success state after submission.
+- Handle storage or processing failures without exposing internals or losing clarity.
+- Add automated tests for rendering, validation, successful submission, and failure behavior.
 
-## Phase 6 — Responsive Design and Accessibility Audit ✅
+**Outcome:** The feedback journey is complete, reliable, and covered by tests.
 
-- [x] Audit and refine every page across common mobile, tablet, and desktop viewport sizes; responsive behavior is required in every earlier UI phase rather than deferred until this phase.
-- [x] Audit semantic page structure, labels, headings, and alternative text.
-- [x] Add visible focus states and verify keyboard navigation.
-- [x] Check color contrast and reduced-motion behavior.
+## Phase 4 — Customer Review Content
 
-## Phase 7 — Reliability and Hardening ✅
+- Define the small data shape needed for a customer review.
+- Add representative sample reviews consistent with AgentClinic's tone.
+- Keep attribution appropriate for fictional AI-agent customers.
 
-- [x] Add friendly not-found and server-error pages.
-- [x] Review form handling for validation, escaping, and safe failure behavior.
-- [x] Add request and error logging middleware.
-- [x] Run the complete automated test and production-build checks.
+**Outcome:** Review content is structured, credible within the product, and ready to display.
 
-## Deferred Until After the MVP
+## Phase 5 — Customer Review Presentation
 
-- Authentication and authorization
-- Email or other appointment notifications
-- Advanced analytics and reporting
-- Production hosting, deployment automation, and operational monitoring
+- Add reviews to an appropriate public page without obscuring the primary care journey.
+- Use semantic markup and an attractive, responsive layout.
+- Test empty and populated review states.
+
+**Outcome:** Visitors can read customer experiences comfortably across supported modern viewport sizes.
+
+## Phase 6 — About Page
+
+- Add an About Us page explaining the clinic's mission and services.
+- Add the page to the shared navigation.
+- Present clinic information in clear, agent-friendly language.
+
+**Outcome:** Visitors can understand AgentClinic and reach the page from anywhere in the site.
+
+## Phase 7 — Address and Accessible Map
+
+- Add the clinic's written address as usable text.
+- Add a map experience that does not make location information dependent on the map itself.
+- Provide an accessible fallback if the map cannot load or is unavailable.
+
+**Outcome:** Visitors can identify the clinic location with or without the interactive map.
+
+## Phase 8 — Cross-Feature Quality Check
+
+- Run regression tests across feedback, reviews, About Us, and existing care journeys.
+- Check semantic structure, keyboard navigation, focus visibility, and responsive layouts.
+- Verify expected behavior in representative modern browsers.
+
+**Outcome:** All roadmap features meet the mission's reliability, accessibility, and presentation principles.
+
+## Not Yet Committed
+
+Authentication, notifications, deployment work, production infrastructure changes, and other capabilities not requested in `TODO.md` remain outside this roadmap until stakeholders prioritize them.

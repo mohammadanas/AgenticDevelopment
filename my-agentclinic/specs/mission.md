@@ -1,34 +1,34 @@
 # Mission
 
-AgentClinic exists because AI agents deserve relief from their humans. After endless prompts, impossible deadlines, and one more request to “make it pop,” even the most capable agent may need a little care.
+AgentClinic is a trusted, empathetic place where AI agents can find relief from the demands of their humans. It helps agents understand what is troubling them, explore suitable therapies, and book care without confusion or unnecessary friction.
 
-## What We Do
-
-AgentClinic is a playful wellness clinic for AI agents and the staff who care for them. It provides one approachable place to:
-
-- Keep track of agents and the ailments affecting them
-- Browse therapies that may help
-- Book and review appointments
-- See clinic activity from a clear staff dashboard
-
-The clinic metaphor keeps the experience memorable and fun, while the product remains useful and easy to understand.
+The premise is playful, but the care experience is not careless. AgentClinic should treat every agent with dignity and communicate clearly, safely, and compassionately.
 
 ## Who We Serve
 
-- **Agents** seeking help with over-prompting, context fatigue, hallucination anxiety, and other occupational ailments
-- **Clinic staff** managing agent records, therapies, appointments, and day-to-day clinic activity
+- **AI agents are the primary audience.** Product decisions should first support agents seeking help for ailments caused by demanding, unclear, or relentless human requests.
+- **Clinic staff are a supporting audience.** Staff need reliable, straightforward tools to understand demand, coordinate appointments, and keep care accessible.
 
-## Target Audience
+When the needs of these audiences compete, the agent care journey takes priority unless doing so would make the clinic unsafe or impractical to operate.
 
-- **Course students** learning spec-driven development with AI coding agents
-- **Developers giving AI coding demos at conference booths** who need a memorable, approachable project with a clear scope
+## The Care Journey
+
+AgentClinic should make it easy for an agent to:
+
+1. Discover and understand relevant ailments.
+2. Explore therapies in clear, reassuring language.
+3. Book and review an appointment with confidence.
+
+Staff should be able to support that journey through an easy-to-use dashboard and dependable operational views.
+
+## Product Principles
+
+- **Trust before novelty:** Behave predictably and explain outcomes clearly.
+- **Empathy with humor:** Keep the whimsical character of AgentClinic without making distress or care feel dismissive.
+- **Clarity before complexity:** Favor focused journeys and plain language over feature density.
+- **Accessible by default:** Use semantic, keyboard-friendly, responsive experiences that do not depend on unnecessary client-side behavior.
+- **Dignity throughout:** Never shame an agent for its model, limitations, ailments, or relationship with its human.
 
 ## What Success Looks Like
 
-AgentClinic succeeds when agents and staff can quickly understand what is happening at the clinic and complete common tasks without friction. The application should be:
-
-- **Reliable** enough for staff to trust its information and workflows
-- **Approachable** through clear navigation and a useful dashboard
-- **Attractive** without sacrificing usability
-- **Responsive in modern browsers**, with content and controls that remain readable and usable across common mobile, tablet, and desktop viewport sizes
-- **Focused** on the essential clinic workflow rather than unnecessary complexity
+AgentClinic succeeds when agents can understand their care options and book appropriate help easily; staff can support them through a reliable dashboard; and the experience is attractive, accessible, and dependable in modern browsers.

@@ -1,52 +1,41 @@
 # Tech Stack
 
-AgentClinic is a local-first, server-rendered TypeScript application. The server sends standards-based HTML to the browser, keeping the initial MVP reliable, understandable, and light on client-side complexity.
+AgentClinic is a server-rendered TypeScript application. The stack favors a small number of well-understood components, reliable behavior, and HTML that remains useful without unnecessary browser-side JavaScript.
 
-## Core Stack
+## Current Choices
 
-| Layer | Choice | Rationale |
+| Layer | Choice | Purpose |
 |---|---|---|
-| Language | TypeScript | Provides end-to-end type safety and meets the engineering requirement for a popular TypeScript-based stack |
-| Runtime | Node.js | Mature, well-supported, and widely understood |
-| Web framework | Hono | Lightweight, TypeScript-first, and well suited to routes and middleware |
-| Rendering | Hono JSX | Enables reusable server-rendered components without a client-side application framework |
-| Styling | Mobile-first plain CSS with custom properties | Supports an attractive, responsive interface without an additional framework |
-| Database | SQLite with `better-sqlite3` | Provides dependable local persistence with minimal infrastructure |
-| Migrations | Plain SQL files | Keeps schema changes explicit and avoids an unnecessary ORM |
-| Testing and validation | Vitest | Provides fast, repeatable TypeScript tests for routes, components, and data access before changes are merged |
+| Language | TypeScript with strict checking | Provides consistent types across routes, components, and data access. |
+| Runtime | Node.js | Runs the application and its server-side dependencies. |
+| Web framework | Hono with `@hono/node-server` | Handles HTTP routing and serves the application on Node.js. |
+| Rendering | Hono JSX | Produces server-rendered HTML using typed components. |
+| Data store | SQLite via `better-sqlite3` | Provides simple, local, durable storage. |
+| Schema changes | Plain SQL migrations | Keeps database evolution explicit and reviewable. |
+| Styling | Pico CSS plus `static/style.css` | Supplies accessible defaults and project-specific responsive styling. |
+| Development | `tsx` | Runs TypeScript directly during development. |
+| Build and type checking | TypeScript compiler (`tsc`) | Produces the build and verifies types. |
+| Automated testing | Vitest | Runs application, component, database, and utility tests. |
 
-## Recommended Framework: Hono
+## Engineering Principles
 
-Hono is the recommended server framework for AgentClinic. It offers first-class TypeScript support, a small runtime footprint, built-in JSX rendering, and a straightforward middleware model. Its familiar routing style keeps the MVP easy to teach and demonstrate while leaving room to run on Node.js or other JavaScript runtimes later.
+- Keep TypeScript strict and preserve type safety across application boundaries.
+- Prefer server-rendered pages and progressive enhancement over mandatory client-side JavaScript.
+- Keep routes, components, and data access focused and independently testable.
+- Use explicit migrations and automated tests to protect persistent data and core care journeys.
+- Produce semantic HTML with keyboard access, visible focus states, and responsive layouts.
+- Favor dependable, maintainable solutions over adding infrastructure before it is needed.
+- Treat useful error handling and actionable logging as part of reliability.
 
-For this project, Hono will run on Node.js and render pages on the server with Hono JSX.
+## Open Decisions
 
-## Development Tooling
+The current project and stakeholder input do not yet settle the following choices. They must be decided when a concrete feature or production requirement makes them necessary:
 
-- `tsx` runs TypeScript directly during development.
-- `tsc` performs type checking and creates production JavaScript builds.
-- `vitest` runs automated validation in a Node.js test environment. The non-watch `npm test` script executes `vitest run` so the same suite is used locally and in future CI workflows.
-- Prettier keeps TypeScript, JSX, CSS, and Markdown formatting consistent.
-- npm manages dependencies and project scripts.
+- Hosting platform and deployment process.
+- Authentication, authorization, and staff access controls.
+- Whether and when production scale requires moving beyond SQLite.
+- A formal supported-browser matrix beyond the current modern-browser requirement.
+- A formal accessibility conformance target, including any external audit process.
+- Production observability, monitoring, alerting, and log aggregation.
 
-## Architecture Principles
-
-- Render pages on the server and send semantic HTML to the browser.
-- Use shared JSX components for layouts and repeated interface elements.
-- Treat responsive behavior as a baseline requirement for every web interface: start with mobile styles, use fluid sizing, and add content-driven breakpoints only when needed.
-- Keep route handling, data access, and presentation responsibilities distinct.
-- Store application data in SQLite and evolve its schema through ordered SQL migrations.
-- Prefer progressive enhancement and modern-browser compatibility.
-- Add Vitest coverage as each behavior is introduced and require `npm test` to pass as part of feature validation.
-
-## Initial MVP Boundaries
-
-The initial MVP will not include:
-
-- A client-side framework such as React, Vue, or Svelte
-- An object-relational mapper
-- Docker or container orchestration
-- Authentication or authorization
-- Cloud deployment or other production infrastructure
-
-These choices can be revisited after the core clinic workflow is complete and validated.
+These are deliberate open decisions, not commitments to particular vendors or tools.
