@@ -1,0 +1,4 @@
+interface:
+  display_name: "Feature Spec"
+  short_description: "Plan the next roadmap feature safely"
+  default_prompt: "Use $feature-spec to interview me and specify the next roadmap feature."
