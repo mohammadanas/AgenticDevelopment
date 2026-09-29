@@ -1,7 +1,15 @@
 import { serve } from "@hono/node-server";
 
-import { app } from "./app";
+import { createApp } from "./app";
+import { createDatabase } from "./db/database";
+import { migrate } from "./db/migrate";
+import { seed } from "./db/seed";
 
+const database = createDatabase();
+migrate(database);
+seed(database);
+
+const app = createApp(database);
 const port = 3000;
 
 serve({ fetch: app.fetch, port }, (info) => {

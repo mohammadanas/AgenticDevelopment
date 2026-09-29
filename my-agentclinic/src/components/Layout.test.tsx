@@ -7,39 +7,28 @@ import { Layout } from "./Layout";
 import { Main } from "./Main";
 
 describe("layout components", () => {
-  it("renders the header with a home link", () => {
-    const html = renderToString(<Header />);
-
-    expect(html).toBe('<header><a href="/">AgentClinic</a></header>');
+  it("renders semantic primary navigation", () => {
+    const output = renderToString(<Header />);
+    expect(output).toContain('<nav aria-label="Primary navigation">');
+    expect(output).toContain('href="/">Home</a>');
+    expect(output).toContain('href="/agents">Agents</a>');
+    expect(output).toContain('href="/ailments">Ailments</a>');
   });
 
   it("renders page content inside the main landmark", () => {
-    const html = renderToString(
-      <Main>
-        <p>Page content</p>
-      </Main>,
-    );
-
-    expect(html).toBe("<main><p>Page content</p></main>");
+    expect(renderToString(<Main><p>Page content</p></Main>)).toBe("<main><p>Page content</p></main>");
   });
 
   it("renders the AgentClinic footer", () => {
-    const html = renderToString(<Footer />);
-
-    expect(html).toBe("<footer><p>AgentClinic</p></footer>");
+    expect(renderToString(<Footer />)).toBe("<footer><p>AgentClinic</p></footer>");
   });
 
-  it("composes one header, main, and footer around page content", () => {
-    const html = renderToString(
-      <Layout>
-        <h1>Test page</h1>
-      </Layout>,
-    );
-
-    expect(html).toContain('<link rel="stylesheet" href="/static/style.css"/>');
-    expect(html.match(/<header/g)).toHaveLength(1);
-    expect(html.match(/<main/g)).toHaveLength(1);
-    expect(html.match(/<footer/g)).toHaveLength(1);
-    expect(html).toContain("<main><h1>Test page</h1></main>");
+  it("loads PicoCSS before project overrides and composes landmarks", () => {
+    const output = renderToString(<Layout><h1>Test page</h1></Layout>);
+    expect(output.indexOf("/static/pico.min.css")).toBeLessThan(output.indexOf("/static/style.css"));
+    expect(output.match(/<header/g)).toHaveLength(1);
+    expect(output.match(/<nav/g)).toHaveLength(1);
+    expect(output.match(/<main/g)).toHaveLength(1);
+    expect(output.match(/<footer/g)).toHaveLength(1);
   });
 });
