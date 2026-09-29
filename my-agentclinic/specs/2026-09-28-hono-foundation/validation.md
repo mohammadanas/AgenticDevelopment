@@ -12,9 +12,20 @@ npm ci
 
 - The command exits with status `0`.
 - The lockfile and manifest agree.
-- Hono, the Hono Node.js adapter, and `tsx` are recorded at exact versions without `^` or `~` prefixes.
+- Hono, the Hono Node.js adapter, `tsx`, and Vitest are recorded at exact versions without `^` or `~` prefixes.
 
-## 2. TypeScript Checks
+## 2. Automated Tests
+
+```sh
+npm test
+```
+
+- The command runs `vitest run` and exits with status `0`.
+- Tests exercise the exported Hono app without starting a network server.
+- The suite covers the home page and shared layout, stylesheet response, and health response contracts.
+- The suite verifies responsive viewport metadata and the stylesheet's fluid-width and wide-screen rules.
+
+## 3. TypeScript Checks
 
 ```sh
 npm run typecheck
@@ -25,7 +36,7 @@ npm run build
 - `tsconfig.json` retains `"strict": true`.
 - The build produces the configured JavaScript output.
 
-## 3. Server Startup
+## 4. Server Startup
 
 ```sh
 npm run dev
@@ -35,7 +46,7 @@ npm run dev
 - The application listens on port `3000` by default.
 - Keep the process running while completing the HTTP checks below.
 
-## 4. Automated HTTP Contract Checks
+## 5. HTTP Smoke Checks
 
 In a second terminal, run:
 
@@ -78,10 +89,11 @@ grep -Fx '{"status":"ok"}' /tmp/agentclinic-health.json
 - The response contains one semantic header, main, and footer and links `/static/style.css`.
 - The home response contains the exact `AgentClinic` heading and an open-for-business message.
 - The stylesheet request returns HTTP `200`, a CSS content type, and non-empty CSS.
+- The stylesheet includes mobile-first fluid gutters/content sizing and a wider-viewport media query.
 - The health response content type includes `application/json`.
 - The health response body is exactly `{"status":"ok"}`.
 
-## 5. Component Boundaries
+## 6. Component Boundaries
 
 Confirm all three component modules exist:
 
@@ -95,16 +107,17 @@ test -f src/components/Footer.tsx
 - `Layout.tsx` imports and composes all three components.
 - `Header`, `Main`, and `Footer` are not declared inline in `Layout.tsx` or combined into a shared component file.
 
-## 6. Manual Smoke Check
+## 7. Manual Smoke Check
 
 - Open `http://localhost:3000/` in a modern browser, or inspect the saved response with `curl`.
 - Confirm the page is readable and clearly identifies AgentClinic as open.
 - Confirm the browser tab title contains `AgentClinic` and the page has no broken assets or unintended client-side behavior.
 - Confirm the stylesheet loads and the header, main content, and footer are visibly styled.
+- Use responsive browser tools to check widths of `320px`, `768px`, and `1440px`; at each width, confirm there is no horizontal page scrolling, content remains readable, gutters remain visible, and header/main/footer do not overlap or clip.
 - Open `http://localhost:3000/health`, or inspect it with `curl`, and confirm the documented JSON is shown.
 - Stop the development server cleanly with `Ctrl-C` after verification.
 
-## 7. Scope Review
+## 8. Scope Review
 
 Inspect the implementation diff and confirm it contains no:
 
@@ -113,8 +126,8 @@ Inspect the implementation diff and confirm it contains no:
 - Authentication or authorization
 - Business routes other than `/` and `/health`
 - Client-side framework or browser-side application code
-- Vitest setup, CI/CD configuration, deployment, or monitoring work
+- CI/CD configuration, deployment, or monitoring work
 
 ## Definition of Done
 
-The feature is mergeable when dependency installation, type-checking, building, server startup, both HTTP contracts, the manual smoke check, and the scope review all pass. Any failure blocks the merge until corrected or the specification is deliberately revised.
+The feature is mergeable when dependency installation, the Vitest suite, type-checking, building, server startup, all HTTP contracts, the manual smoke check, and the scope review pass. Any failure blocks the merge until corrected or the specification is deliberately revised.

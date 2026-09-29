@@ -13,6 +13,7 @@ body {
   background: #f7f9fc;
   font-family: system-ui, sans-serif;
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 header,
@@ -34,7 +35,7 @@ header a {
 main {
   width: min(100% - 2rem, 60rem);
   margin-inline: auto;
-  padding-block: 4rem;
+  padding-block: 2.5rem;
   flex: 1;
 }
 
@@ -51,4 +52,10 @@ footer {
 
 footer p {
   margin: 0;
+}
+
+@media (min-width: 48rem) {
+  main {
+    padding-block: 4rem;
+  }
 }

@@ -29,25 +29,34 @@
 
 14. Create a `Home` page that uses `Layout` and provides an `h1` whose exact text is `AgentClinic` plus a short message communicating that the clinic is open.
 15. Add a plain CSS file with a small reset and foundational styles for the page, header, main content, and footer.
-16. Serve the stylesheet from `/static/style.css` with Hono's Node.js static-file middleware.
-17. Link `/static/style.css` from `Layout` and confirm the route returns a CSS content type.
-18. Add no client-side JavaScript or client-side framework.
+16. Implement mobile-first responsive behavior with fluid gutters and content width, overflow-safe sizing, and a content-driven breakpoint for wider viewports.
+17. Serve the stylesheet from `/static/style.css` with Hono's Node.js static-file middleware.
+18. Link `/static/style.css` from `Layout` and confirm the route returns a CSS content type.
+19. Add no client-side JavaScript or client-side framework.
 
 ## Task Group 6 — Health Route
 
-19. Add `GET /health` with a `200 OK` JSON response.
-20. Return the exact payload `{"status":"ok"}` without external dependency checks.
+20. Add `GET /health` with a `200 OK` JSON response.
+21. Return the exact payload `{"status":"ok"}` without external dependency checks.
 
 ## Task Group 7 — Project Scripts
 
-21. Add a development script that runs the server through `tsx`.
-22. Add a type-check script that runs TypeScript without emitting files.
-23. Ensure the build script produces the configured JavaScript output successfully.
+22. Add a development script that runs the server through `tsx`.
+23. Add a type-check script that runs TypeScript without emitting files.
+24. Ensure the build script produces the configured JavaScript output successfully.
+25. Add a non-watch test script that runs Vitest once and returns an appropriate process status.
 
-## Task Group 8 — Verification
+## Task Group 8 — Automated Tests
 
-24. Install dependencies from a clean lockfile-respecting state and confirm installation succeeds.
-25. Run the type-check and production-build scripts and resolve all errors.
-26. Start the development server and verify the home page, stylesheet, and health response contracts with repeatable HTTP commands.
-27. Perform the manual browser or `curl` smoke checks in `validation.md`.
-28. Review the implementation diff to confirm persistence, authentication, Vitest setup, client-side code, and unrelated features were not introduced.
+26. Add Vitest tests that call the exported Hono app directly without starting the network server.
+27. Verify the home route's status, HTML content type, responsive viewport metadata, linked stylesheet, semantic layout, heading, and open message.
+28. Verify the stylesheet route returns non-empty CSS with a CSS content type and contains the responsive layout foundations.
+29. Verify the health route returns status `200`, a JSON content type, and exactly `{ "status": "ok" }`.
+
+## Task Group 9 — Verification
+
+30. Install dependencies from a clean lockfile-respecting state and confirm installation succeeds.
+31. Run the Vitest suite, type-check, and production build and resolve all errors.
+32. Start the development server and verify the home page, stylesheet, and health response contracts with repeatable HTTP commands.
+33. Check the page at the viewport widths listed in `validation.md` and complete the remaining manual smoke checks.
+34. Review the implementation diff to confirm persistence, authentication, client-side code, and unrelated features were not introduced.
