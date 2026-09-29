@@ -49,7 +49,7 @@ This phase follows the project mission by giving course students and demo develo
 ## Decisions
 
 - The home page establishes the initial shared JSX document shell and modest foundational styling. Expanded navigation, additional layouts, and a broader design system remain later-phase work.
-- Responsive design is a baseline for all UI work, not a Phase 9 retrofit. This phase establishes mobile-first defaults, fluid sizing, and a content-driven wide-screen enhancement; Phase 9 performs the full-product audit.
+- Responsive design is a baseline for all UI work, not a Phase 6 retrofit. This phase establishes mobile-first defaults, fluid sizing, and a content-driven wide-screen enhancement; Phase 6 performs the full-product audit.
 - The health contract is a minimal JSON object so it is stable and easy to verify from scripts or monitoring tools.
 - Vitest exercises the exported Hono application directly, without opening a network port, so route contracts provide fast and repeatable validation.
 - Server startup must use the Hono Node.js adapter rather than relying on runtime-specific behavior from another JavaScript runtime.

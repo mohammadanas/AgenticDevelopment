@@ -1,0 +1,6 @@
+interface:
+  display_name: "Maintain Changelog"
+  short_description: "Update dated changelog entries from Git history"
+  default_prompt: "Use $changelog to update the project changelog before merging."
+policy:
+  allow_implicit_invocation: false
